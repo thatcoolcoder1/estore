@@ -1,7 +1,9 @@
 import express from "express";
 import type { Request, Response} from "express"
-import connectDB from "./config/db.ts";
-import authRoutes from "./routes/authRoutes.ts";
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js"
+import cartRoutes from "./routes/cartRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -10,8 +12,9 @@ const port = 3000;
 app.use(express.json());
 
 // Mount routes
-app.use("/", authRoutes);
-
+app.use("/auth", authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart',cartRoutes)
 // Root test route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world!");
