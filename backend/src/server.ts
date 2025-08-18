@@ -4,7 +4,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js"
 import cartRoutes from "./routes/cartRoutes.js";
-
+import orderRoutes from "./routes/orderRoutes.js"
 const app = express();
 const port = 3000;
 
@@ -15,6 +15,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart',cartRoutes)
+app.use('/api/order',orderRoutes)
 // Root test route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world!");
