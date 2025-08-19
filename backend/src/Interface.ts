@@ -67,7 +67,13 @@ export interface IOrder {
     status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 }
 
+export interface SalesRecord {
+  date:Date,
+  totalSales: number,
+  totalRevenue:number
+}
+
+
+export interface SalesRecordModel extends SalesRecord, Document{}
 export interface IOrderModel extends IOrder, Document {}
-
-
 export interface CartModel extends Cart, Document{}
