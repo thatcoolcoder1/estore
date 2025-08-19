@@ -6,6 +6,10 @@ import productRoutes from "./routes/productRoutes.js"
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
+import analyticsRoutes from "./routes/analyticsRoutes.js"
+import errorHandler from "./middleware/errorHandler.js"
+
+
 const app = express();
 const port = 3000;
 
@@ -18,6 +22,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart',cartRoutes)
 app.use('/api/order',orderRoutes)
 app.use('/api/admin',adminRoutes)
+app.use('/api/admin/analytics',analyticsRoutes)
+app.use(errorHandler);
 // Root test route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world!");
@@ -34,3 +40,5 @@ connectDB()
     console.error("Failed to start server after database connection failure.");
     process.exit(1);
   });
+
+export default app;
