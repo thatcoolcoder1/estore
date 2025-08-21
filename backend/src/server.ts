@@ -8,6 +8,7 @@ import orderRoutes from "./routes/orderRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
 import analyticsRoutes from "./routes/analyticsRoutes.js"
 import errorHandler from "./middleware/errorHandler.js"
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/api/order',orderRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/admin/analytics',analyticsRoutes)
 app.use(errorHandler);
+app.use('/api/payments',paymentRoutes)
 // Root test route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world!");
