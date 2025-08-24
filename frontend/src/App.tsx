@@ -5,12 +5,21 @@ import HomePage from "./pages/HomePage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import { useSelector } from "react-redux";
 import type { RootState } from "./app/store.ts";
+import { logout } from "./features/AuthSlice.ts";
+import { useDispatch } from "react-redux";
+import CategoryPage from "./pages/CategoryPage.tsx";
+import ProductDetailPage from "./pages/ProductDetailPage.tsx";
+import CartPage from "./pages/CartPage.tsx";
 
 const App: React.FC = () => {
   const { user, token } = useSelector((state: RootState) => state.auth);
   const isAuthenticated = !!token;
+  const dispatch = useDispatch();
   const admin = user?.isAdmin;
-  console.log(user)
+  const logout1 = () => {
+    dispatch(logout());
+  };
+  console.log(user);
   return (
     <BrowserRouter>
       <Routes>
@@ -32,12 +41,21 @@ const App: React.FC = () => {
                 />
                 <Route
                   path="/admin-dashboard"
-                  element={<div>Admin Dashboard</div>}
+                  element={
+                    <div>
+                      Admin Dashboard{" "}
+                      <button onClick={logout1}>click me</button>
+                    </div>
+                  }
                 />
               </>
             ) : (
               <>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/category/:category" element={<CategoryPage />} />
+                <Route path="/product/:id" element={<ProductDetailPage />} />
+                <Route path="/cart/" element={<CartPage />} />
+
               </>
             )}
 
