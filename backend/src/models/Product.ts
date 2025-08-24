@@ -1,5 +1,5 @@
 import mongoose, {Schema,Document} from "mongoose";
-import { Product } from "../Interface";
+import { Product } from "../Interface.js";
 
 
 export interface ProductModel extends Product,Document {}
@@ -12,7 +12,7 @@ const ProductSchema = new Schema<ProductModel>({
 
     },
     image : {
-        type : String,
+        type : [String],
         required:true,
     },
     description:{

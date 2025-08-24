@@ -2,8 +2,16 @@ import type {Request, Response} from "express";
 import  Order from "../models/Order.js" 
 import Cart from "../models/Cart.js"
 import Products from "../models/Product.js"
+import { IUserModel } from "../models/Users.js";
 
 
+declare global {
+    namespace Express {
+        interface Request {
+            user?: IUserModel;
+        }
+    }
+}
 
 
 export const createOrder = async (req: Request, res: Response) => {

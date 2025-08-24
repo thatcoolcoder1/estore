@@ -1,8 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose";
-import {Iuser} from "../Interface"
+import {IUser} from "../Interface.js"
 
-// document {} converts iusermodel to a mongoose document with all its builtin methods
-export interface IUserModel extends Iuser, Document {}
+// document {} converts Iuser to a mongoose document with all its builtin methods
+export interface IUserModel extends IUser, Document {}
 //schema
 const UserSchema = new Schema<IUserModel>({
 

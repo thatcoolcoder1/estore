@@ -1,11 +1,11 @@
 import type { Request,Response } from "express";
-import Products from "../models/Product.ts"
+import Products from "../models/Product.js"
 
 // /products/category/:category
-export const getProdcutByCategory = async (req:Request, res:Response) => {
+export const getProductByCategory = async (req:Request, res:Response) => {
     try {
         const categoryurl = req.params.category
-        const ProductExists = await Products.find({"category":categoryurl})
+        const ProductExists = await Products.find({category:categoryurl})
         if(ProductExists.length === 0){
             res.status(404).json({ message: "No products found in this category" });
             return;

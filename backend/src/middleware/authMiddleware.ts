@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { Secret } from 'jsonwebtoken';
-import User, { IUserModel } from '../models/Users';
+import User, { IUserModel } from '../models/Users.js';
 import dotenv from 'dotenv';
 
 // Configure dotenv to load variables from the root directory
@@ -48,6 +48,7 @@ export const protect = async (req:Request, res:Response ,next:NextFunction) => {
 
 export const admin =  (req:Request, res:Response, next:NextFunction) => {
     if (req.user && req.user.isAdmin){
+        console.log("Welcome admin")
         next();
     }
     else{

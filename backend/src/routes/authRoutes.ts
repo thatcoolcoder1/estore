@@ -1,8 +1,8 @@
 //authRouter    
-    
+
 import { Router } from "express";
-import type { Request, Response} from "express"
-import {login,register} from "../controllers/authControllers.ts"
+import type { Request, Response } from "express"
+import { login, register } from "../controllers/authControllers.js"
 const router = Router();
 
 router.post("/login", login);
