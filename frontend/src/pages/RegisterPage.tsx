@@ -1,6 +1,7 @@
 // src/pages/RegisterPage.tsx
 import React, { useState } from "react";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredentials } from "../features/AuthSlice";
 import { useDispatch } from "react-redux";
@@ -31,7 +32,7 @@ const RegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post<RegisterResponse>(
+      const response = await apiClient.post<RegisterResponse>(
         "http://localhost:3000/auth/register",
         { name, email, password }
       );

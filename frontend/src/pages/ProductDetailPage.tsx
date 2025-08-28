@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../features/CartSlice";
 import type { RootState } from "../app/store";
@@ -43,7 +44,7 @@ const ProductDetailPage: React.FC = () => {
 
       dispatch(addItemToCart(cartItem));
 
-      await axios.post(
+      await apiClient.post(
         "http://localhost:3000/api/cart/",
         { productId: product._id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -65,7 +66,7 @@ const ProductDetailPage: React.FC = () => {
       }
       try {
         setLoading(true);
-        const response = await axios.get<Product>(
+        const response = await apiClient.get<Product>(
           `http://localhost:3000/api/products/${id}`
         );
         setProduct(response.data);

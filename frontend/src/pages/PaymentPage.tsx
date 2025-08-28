@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { useSelector,useDispatch } from "react-redux";
 import type { RootState } from "../app/store";
 import { clearCart } from "../features/CartSlice";
@@ -58,7 +59,7 @@ const PaymentPage: React.FC = () => {
 
   try {
     // 1. Create a Razorpay order on backend
-    const { data } = await axios.post<RazorpayOrderResponse>(
+    const { data } = await apiClient.post<RazorpayOrderResponse>(
       "http://localhost:3000/api/payments/create-order",
       {
         amount: cart.totalPrice,

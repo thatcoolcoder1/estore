@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../features/CartSlice.ts";
 import type { RootState } from "../app/store.ts";
+import apiClient from "../api/axios.ts";
 
 interface Product {
   _id: string;
@@ -33,7 +34,7 @@ const CategoryPage: React.FC = () => {
       }
       try {
         setLoading(true);
-        const response = await axios.get<Product[]>(
+        const response = await apiClient.get<Product[]>(
           `http://localhost:3000/api/products/category/${category}`
         );
         setProducts(response.data);
@@ -65,7 +66,7 @@ const CategoryPage: React.FC = () => {
 
       dispatch(addItemToCart(cartItem));
 
-      await axios.post(
+      await apiClient.post(
         "http://localhost:3000/api/cart/",
         {
           productId: product._id,

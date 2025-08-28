@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
 import axios from "axios";
 import { clearCart } from "../features/CartSlice";
+import apiClient from "../api/axios";
 
 interface OrderItem {
   product: string;
@@ -70,7 +71,7 @@ const CheckoutPage: React.FC = () => {
 
     try {
       // Hit PAYMENT create-order route (not order one)
-      const paymentRes = await axios.post<RazorpayOrderResponse>(
+      const paymentRes = await apiClient.post<RazorpayOrderResponse>(
         "http://localhost:3000/api/payments/create-order",
         {
           shippingAddress,

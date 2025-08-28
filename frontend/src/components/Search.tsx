@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import apiClient from "../api/axios";
 
 interface Product {
   _id: string;
@@ -29,7 +30,7 @@ const Search: React.FC = () => {
     setError(null);
 
     try {
-      const { data } = await axios.get<Product[]>(
+      const { data } = await apiClient.get<Product[]>(
         `http://localhost:3000/api/products/search?query=${encodeURIComponent(query)}`
       );
 

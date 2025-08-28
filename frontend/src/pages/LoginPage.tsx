@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import { useDispatch } from "react-redux";
@@ -33,7 +34,7 @@ const AuthPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.post<LoginResponse>(
+      const response = await apiClient.post<LoginResponse>(
         "http://localhost:3000/auth/login",
         { email, password }
       );

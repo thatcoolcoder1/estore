@@ -1,6 +1,7 @@
 // src/pages/CartPage.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import {
   setCart,
 } from "../features/CartSlice";
 import { Trash2, Minus, Plus, ShoppingBag } from "lucide-react";
+// import apiClient from "../api/axios";
 
 interface CartItem {
   product: string;
@@ -43,7 +45,8 @@ const CartPage: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get<Cart>("http://localhost:3000/api/cart/", {
+        const response = await apiClient
+        .get<Cart>("http://localhost:3000/api/cart/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         dispatch(setCart(response.data));
@@ -64,7 +67,7 @@ const CartPage: React.FC = () => {
     if (newQuantity < 1) return;
     dispatch(updateItemQuantity({ productId, quantity: newQuantity }));
     try {
-      await axios.put(
+      await apiClient.put(
         "http://localhost:3000/api/cart/",
         { productId, quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -77,7 +80,7 @@ const CartPage: React.FC = () => {
   const handleRemoveItem = async (productId: string) => {
     dispatch(removeItemFromCart(productId));
     try {
-      await axios.delete("http://localhost:3000/api/cart/item", {
+      await apiClient.delete("http://localhost:3000/api/cart/item", {
         headers: { Authorization: `Bearer ${token}` },
         data: { productId },
       } as any);
@@ -89,7 +92,7 @@ const CartPage: React.FC = () => {
   const handleClearCart = async () => {
     dispatch(clearCart());
     try {
-      await axios.delete("http://localhost:3000/api/cart/", {
+      await apiClient.delete("http://localhost:3000/api/cart/", {
         headers: { Authorization: `Bearer ${token}` },
       });
     } catch (err) {

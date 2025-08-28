@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
@@ -52,7 +53,7 @@ const OrderDetailPage: React.FC = () => {
       }
 
       try {
-        const response = await axios.get<Order>(`http://localhost:3000/api/order/${id}`, {
+        const response = await apiClient.get<Order>(`http://localhost:3000/api/order/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrder(response.data);

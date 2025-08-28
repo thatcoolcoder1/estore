@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import apiClient from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 // import { UseSelector } from "react-redux";
@@ -54,7 +55,7 @@ const OrderPage: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get<Order[]>("http://localhost:3000/api/order/", {
+        const response = await apiClient.get<Order[]>("http://localhost:3000/api/order/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(response.data);
