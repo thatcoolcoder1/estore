@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import apiClient from "../api/axios";
 import { useSelector,useDispatch } from "react-redux";
 import type { RootState } from "../app/store";
@@ -181,7 +181,5 @@ const PaymentPage: React.FC = () => {
 };
 
 export default PaymentPage;
-function dispatch(arg0: { payload: undefined; type: "cart/clearCart"; }) {
-  throw new Error("Function not implemented.");
-}
+
 

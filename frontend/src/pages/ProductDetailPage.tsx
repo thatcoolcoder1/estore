@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import apiClient from "../api/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../features/CartSlice";

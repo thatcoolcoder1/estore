@@ -26,7 +26,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     // ✅ NEW: set entire cart from backend
-    setCart: (state, action: PayloadAction<Cart>) => {
+    setCart: (_state, action: PayloadAction<Cart>) => {
       return action.payload;
     },
 

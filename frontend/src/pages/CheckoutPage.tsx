@@ -1,38 +1,38 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
-import axios from "axios";
-import { clearCart } from "../features/CartSlice";
+// import axios from "axios";
+// import { clearCart } from "../features/CartSlice";
 import apiClient from "../api/axios";
 
-interface OrderItem {
-  product: string;
-  title: string;
-  image: string[];
-  price: number;
-  quantity: number;
-}
-interface Order {
-  _id: string;
-  user: string;
-  items: OrderItem[];
-  totalPrice: number;
-  shippingAddress: {
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  paymentMethod: string;
-  isPaid: boolean;
-  paidAt?: string;
-  isDelivered: boolean;
-  deliveredAt?: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// interface OrderItem {
+//   product: string;
+//   title: string;
+//   image: string[];
+//   price: number;
+//   quantity: number;
+// }
+// // interface Order {
+//   _id: string;
+//   user: string;
+//   items: OrderItem[];
+//   totalPrice: number;
+//   shippingAddress: {
+//     address: string;
+//     city: string;
+//     postalCode: string;
+//     country: string;
+//   };
+//   paymentMethod: string;
+//   isPaid: boolean;
+//   paidAt?: string;
+//   isDelivered: boolean;
+//   deliveredAt?: string;
+//   status: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 interface RazorpayOrderResponse {
   id: string;
   amount: number;
@@ -50,7 +50,7 @@ const CheckoutPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { token, user } = useSelector((state: RootState) => state.auth);
   const cart = useSelector((state: RootState) => state.cart);
 

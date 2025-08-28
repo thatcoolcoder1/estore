@@ -1,6 +1,6 @@
 // src/pages/RegisterPage.tsx
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import apiClient from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredentials } from "../features/AuthSlice";

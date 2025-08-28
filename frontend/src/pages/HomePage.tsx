@@ -1,10 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../features/AuthSlice";
+// import { logout } from "../features/AuthSlice";
 import Footer from "../components/footer";
-import Search from "../components/Search";
-import Navbar from "../components/Navbar";
+// import Search from "../components/Search";
+// import Navbar from "../components/Navbar";
 
 const categories = [
   {
@@ -50,11 +50,11 @@ const categories = [
 ];
 
 const HomePage: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const logout1 = () => {
-    dispatch(logout());
-  };
+  // const logout1 = () => {
+  //   dispatch(logout());
+  // };
   const navigate = useNavigate();
 
   return (

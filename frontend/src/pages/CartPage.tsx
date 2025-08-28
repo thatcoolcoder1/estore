@@ -1,6 +1,6 @@
 // src/pages/CartPage.tsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import apiClient from "../api/axios";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../app/store";

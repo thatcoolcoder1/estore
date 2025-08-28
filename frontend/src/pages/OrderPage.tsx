@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import apiClient from "../api/axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { format } from "date-fns";
 // import { UseSelector } from "react-redux";
 import { useSelector } from "react-redux";
@@ -43,7 +43,7 @@ const OrderPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // Get the token from local storage instead of Redux
   const token = useSelector((state:RootState)=>state.auth.token)
   // const token = localStorage.getItem('token')
