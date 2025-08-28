@@ -1,58 +1,51 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../features/AuthSlice";
+import Footer from "../components/footer";
+import Search from "../components/Search";
+import Navbar from "../components/Navbar";
 
 const categories = [
   {
     name: "Apparel",
     image:
-      "https://images.pexels.com/photos/1035685/pexels-photo-1035685.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/1035685/pexels-photo-1035685.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Electronics",
     image:
-      "https://images.pexels.com/photos/5614135/pexels-photo-5614135.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/5614135/pexels-photo-5614135.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Home Goods",
     image:
-      "https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Beauty",
     image:
-      "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Sports",
     image:
-      "https://images.pexels.com/photos/1661950/pexels-photo-1661950.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/1661950/pexels-photo-1661950.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Outdoor",
     image:
-      "https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Furniture",
     image:
-      "https://images.pexels.com/photos/2387754/pexels-photo-2387754.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "https://images.pexels.com/photos/2387754/pexels-photo-2387754.jpeg?auto=compress&cs=tinysrgb&h=500",
   },
   {
     name: "Books",
     image:
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&h=600&q=80",
-  },
-  {
-    name: "Tools",
-    image:
-      "https://images.unsplash.com/photo-1581090700227-4c4c0d7a4a0f?w=600&h=600&q=80",
-  },
-  {
-    name: "Toys",
-    image:
-      "https://images.unsplash.com/photo-1601758123927-1965c0c7c3ac?w=600&h=600&q=80",
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80",
   },
 ];
 
@@ -62,66 +55,73 @@ const HomePage: React.FC = () => {
   const logout1 = () => {
     dispatch(logout());
   };
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen font-sans">
+    <div className="bg-[#121212] min-h-screen font-sans flex flex-col text-[#f5f5f5]">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">
-            eStore
-          </h1>
-          <button
-            onClick={logout1}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:from-indigo-600 hover:to-purple-700 transition"
-          >
-            Logout
-          </button>
-        </div>
-      </header>
+      {/* <Navbar/>` */}
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+      {/* Main */}
+      <main className="flex-1 max-w-7xl mx-auto w-full py-10 px-6">
         {/* Banner */}
-        <div className="w-full h-80 rounded-2xl overflow-hidden shadow-2xl mb-14">
+        <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden mb-12 shadow-2xl">
           <img
-            src="https://images.unsplash.com/photo-1441984904561-bf29c5950a36?w=1200&q=80"
-            alt="Promotional Banner"
-            className="w-full h-full object-cover"
+            src="src\assets\banner.png"
+            alt="Hero Banner"
+            className="w-full h-[70vh] object-cover"
           />
+          {/* Overlay Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1C3F]/80 via-transparent to-[#FF7E29]/70" />
+
+          {/* Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+            <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-500 drop-shadow-lg">
+              AMAZING 
+              <span className="bg-clip-text bg-gradient-to-r from-orange-300 to-orange-500"> DEALS</span>
+            </h1>
+            <p className="mt-4 text-lg text-gray-200 max-w-2xl">
+              Get the best offers on gadgets, fashion, and more.
+            </p>
+            <button
+              className="mt-8 px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition duration-300 shadow-lg"
+              onClick={() => {
+                navigate("/category/electronics");
+              }}
+            >
+              Shop Now
+            </button>
+          </div>
         </div>
 
-        {/* Title */}
-        <h2 className="text-4xl font-extrabold text-gray-900 mb-10 text-center tracking-tight">
+        {/* Categories */}
+        <h2 className="text-3xl font-bold mb-8 text-center">
           Shop by Category
         </h2>
-
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
             <Link
               key={index}
-              to={`/category/${category.name
-                .toLowerCase()
-                .replace(/\s/g, "-")}`}
-              className="relative block group rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+              to={`/category/${category.name.toLowerCase()}`}
+              className="group relative h-56 rounded-xl overflow-hidden shadow-lg"
             >
-              <div className="relative h-64 rounded-2xl overflow-hidden">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end justify-center p-6">
-                  <h3 className="text-white text-xl font-semibold uppercase tracking-wide drop-shadow-lg">
-                    {category.name}
-                  </h3>
-                </div>
+              <img
+                src={category.image}
+                alt={category.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
+                <h3 className="text-white text-xl font-semibold">
+                  {category.name}
+                </h3>
               </div>
             </Link>
           ))}
         </div>
       </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

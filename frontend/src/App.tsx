@@ -10,18 +10,27 @@ import { useDispatch } from "react-redux";
 import CategoryPage from "./pages/CategoryPage.tsx";
 import ProductDetailPage from "./pages/ProductDetailPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
+import OrderPage from "./pages/OrderPage.tsx";
+import PaymentPage from "./pages/PaymentPage.tsx";
+import CheckoutPage from "./pages/CheckoutPage.tsx";
+import OrderDetail from "./pages/OrderDetail.tsx";
+import Navbar from "./components/Navbar.tsx";
 
 const App: React.FC = () => {
   const { user, token } = useSelector((state: RootState) => state.auth);
   const isAuthenticated = !!token;
   const dispatch = useDispatch();
   const admin = user?.isAdmin;
+
   const logout1 = () => {
     dispatch(logout());
   };
-  console.log(user);
+
   return (
     <BrowserRouter>
+      {/* Show Navbar only if logged in and not admin */}
+      {isAuthenticated && !admin && <Navbar />}
+
       <Routes>
         {!isAuthenticated && (
           <>
@@ -32,13 +41,9 @@ const App: React.FC = () => {
         )}
         {isAuthenticated && (
           <>
-            {/* Admin redirect */}
             {admin ? (
               <>
-                <Route
-                  path="/"
-                  element={<Navigate to="/admin-dashboard" replace />}
-                />
+                <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
                 <Route
                   path="/admin-dashboard"
                   element={
@@ -55,7 +60,10 @@ const App: React.FC = () => {
                 <Route path="/category/:category" element={<CategoryPage />} />
                 <Route path="/product/:id" element={<ProductDetailPage />} />
                 <Route path="/cart/" element={<CartPage />} />
-
+                <Route path="/order" element={<OrderPage />} />
+                <Route path="/pay" element={<PaymentPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/order/:id/" element={<OrderDetail />} />
               </>
             )}
 

@@ -26,45 +26,33 @@ const ProductDetailPage: React.FC = () => {
   const { token } = useSelector((state: RootState) => state.auth);
 
   const handleAddToCart = async () => {
-    if (!product) {
+    if (!product) return;
+    if (!token) {
+      alert("Please log in to add items to your cart.");
       return;
     }
 
-    if (!token) {
-        alert("Please log in to add items to your cart.");
-        return;
-    }
-
     try {
-        const cartItem = {
-            product: product._id,
-            title: product.title,
-            image: product.image,
-            price: product.price,
-            quantity: 1, // Default quantity to 1
-        };
+      const cartItem = {
+        product: product._id,
+        title: product.title,
+        image: product.image,
+        price: product.price,
+        quantity: 1,
+      };
 
-        // Dispatch the action to add the item to the Redux store
-        dispatch(addItemToCart(cartItem));
+      dispatch(addItemToCart(cartItem));
 
-        // Make an API call to the backend to add the item to the database
-        await axios.post(
-            "http://localhost:3000/api/cart/",
-            {
-                productId: product._id,
-                quantity: 1,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+      await axios.post(
+        "http://localhost:3000/api/cart/",
+        { productId: product._id, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-        alert(`${product.title} added to cart!`);
+      alert(`${product.title} added to cart!`);
     } catch (err) {
-        console.error("Failed to add to cart:", err);
-        alert("Failed to add to cart. Please try again.");
+      console.error("Failed to add to cart:", err);
+      alert("Failed to add to cart. Please try again.");
     }
   };
 
@@ -94,8 +82,8 @@ const ProductDetailPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <p className="text-xl font-medium text-gray-600 animate-pulse">
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <p className="text-xl font-medium text-gray-300 animate-pulse">
           Loading product...
         </p>
       </div>
@@ -104,16 +92,16 @@ const ProductDetailPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <p className="text-xl font-medium text-red-500">{error}</p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <p className="text-xl font-medium text-red-400">{error}</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <p className="text-xl font-medium text-gray-500">
+      <div className="flex items-center justify-center min-h-screen bg-gray-900">
+        <p className="text-xl font-medium text-gray-400">
           Product not found.
         </p>
       </div>
@@ -121,12 +109,11 @@ const ProductDetailPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-7xl mx-auto p-8">
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto bg-gray-900/80 p-10 rounded-2xl shadow-2xl border border-gray-800">
         {/* Left: Product Images */}
         <div className="flex flex-col items-center">
-          {/* Main Image */}
-          <div className="w-full h-[500px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+          <div className="w-full h-[500px] bg-gray-800 rounded-xl overflow-hidden flex items-center justify-center border border-gray-700">
             <img
               src={activeImage || product.image[0]}
               alt={product.title}
@@ -134,18 +121,17 @@ const ProductDetailPage: React.FC = () => {
             />
           </div>
 
-          {/* Thumbnails */}
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-3 mt-4">
             {product.image.map((img, idx) => (
               <img
                 key={idx}
                 src={img}
                 alt={`Thumbnail ${idx}`}
                 onClick={() => setActiveImage(img)}
-                className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-transform duration-200 hover:scale-110 ${
                   activeImage === img
-                    ? "border-blue-600"
-                    : "border-transparent"
+                    ? "border-emerald-500"
+                    : "border-gray-600"
                 }`}
               />
             ))}
@@ -156,38 +142,41 @@ const ProductDetailPage: React.FC = () => {
         <div className="flex flex-col justify-center sticky top-10 self-start">
           <button
             onClick={() => navigate(-1)}
-            className="text-sm text-blue-600 hover:underline mb-6"
+            className="text-sm text-emerald-400 hover:underline mb-6"
           >
             ← Back
           </button>
 
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-extrabold text-white mb-4">
             {product.title}
           </h1>
 
-          <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+          <p className="text-gray-300 text-lg mb-6 leading-relaxed">
             {product.description}
           </p>
 
-          <p className="text-3xl font-semibold text-green-600 mb-8">
+          <p className="text-3xl font-bold text-emerald-400 mb-8">
             ₹{product.price}
           </p>
 
           <div className="flex items-center gap-4">
             {product.countInStock > 0 ? (
-              <button onClick={handleAddToCart} className="px-8 py-4 bg-blue-600 text-white text-lg rounded-xl shadow-md hover:bg-blue-700 transition">
-                Add to Cart
+              <button
+                onClick={handleAddToCart}
+                className="px-10 py-4 bg-emerald-500 text-white text-lg font-semibold rounded-xl shadow-lg hover:bg-emerald-600 transition"
+              >
+                🛒 Add to Cart
               </button>
             ) : (
-              <span className="text-red-500 text-lg font-medium">
+              <span className="text-red-400 text-lg font-medium">
                 Out of Stock
               </span>
             )}
           </div>
 
-          <p className="mt-8 text-sm text-gray-500">
+          <p className="mt-8 text-sm text-gray-400">
             Category:{" "}
-            <span className="font-medium text-gray-700">
+            <span className="font-medium text-gray-200">
               {product.category}
             </span>
           </p>
