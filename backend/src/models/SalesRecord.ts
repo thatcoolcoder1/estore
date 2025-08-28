@@ -16,10 +16,11 @@ const SalesRecordSchema = new Schema<SalesRecordModel>({
     required:true,
     type:Number,
     default:0,
-  },{
+  },},
+  {
   timestamps:true
 }
-})
+)
 
 
 const SalesRecord = mongoose.model<SalesRecordModel>('SalesRecord', SalesRecordSchema)
