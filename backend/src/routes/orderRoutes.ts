@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { protect, admin } from "../middleware/authMiddleware.ts"
-import { getAdminOrders, updateOrderToDelivered, updateOrderToPaid, getOrderById, getOrders, createOrder } from "../controllers/orderControllers.ts"
+import { protect, admin } from "../middleware/authMiddleware.js"
+import { getAdminOrders, updateOrderToDelivered, updateOrderToPaid, getOrderById, getOrders, createOrder } from "../controllers/orderControllers.js"
 
 const router = Router();
 
