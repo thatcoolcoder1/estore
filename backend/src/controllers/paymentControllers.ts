@@ -33,30 +33,38 @@ export const createOrder = async (req: Request, res: Response) => {
 
 export const verifyPayments = async (req: Request, res: Response) => {
   try {
-    const { order_id, payment_id, signature } = req.body;
-    const body = order_id + "|" + payment_id;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
+    const body = `${razorpay_order_id}|${razorpay_payment_id}`;
     const generated_signature = crypto
-      .createHmac("sha256", process.env.webhook_secret as string)
+      .createHmac("sha256", process.env.webhook_secret as string) // ✅ use key_secret
       .update(body)
       .digest("hex");
+    console.log(generated_signature)
 
-    if (generated_signature === signature) {
-      const order = await Order.findById(order_id);
+    if (generated_signature === razorpay_signature) {
+      // find your local order by razorpay_order_id (not Mongo _id!)
+      const order = await Order.findOne({ razorpayOrderId: razorpay_order_id });
       if (order) {
         order.isPaid = true;
         order.paidAt = new Date();
         order.status = "processing";
         await order.save();
       }
-      res
-        .status(200)
-        .json({ status: "success", message: "Payment verified successfully" });
+
+      return res.status(200).json({
+        status: "success",
+        message: "Payment verified successfully",
+      });
     } else {
-      res.status(400).json({ status: "failure", message: "Invalid Signature" });
+      return res.status(400).json({
+        status: "failure",
+        message: "Invalid signature",
+      });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({message:"Server Error"})
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
+
