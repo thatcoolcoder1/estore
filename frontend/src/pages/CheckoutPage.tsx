@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
 // import axios from "axios";
 // import { clearCart } from "../features/CartSlice";
 import apiClient from "../api/axios";
-import { clearCart } from "../features/CartSlice";
+// import { clearCart } from "../features/CartSlice";
 
 // interface OrderItem {
 //   product: string;
@@ -51,7 +51,7 @@ const CheckoutPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { token, user } = useSelector((state: RootState) => state.auth);
   const cart = useSelector((state: RootState) => state.cart);
 
