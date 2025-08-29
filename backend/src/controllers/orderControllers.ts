@@ -59,7 +59,7 @@ export const createOrder = async (req: Request, res: Response) => {
         cart.totalPrice = 0;
         await cart.save();
         
-        res.status(201).json(createdOrder);
+        res.status(201).json(  {_id: newOrder._id, createdOrder});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error during order creation." });
