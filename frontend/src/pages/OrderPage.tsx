@@ -6,6 +6,8 @@ import { format } from "date-fns";
 // import { UseSelector } from "react-redux";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
+// import { useDispatch } from "react-redux";
+// import { clearCart } from "../features/CartSlice";
 
 // Interface for a single item within an order
 interface OrderItem {
@@ -47,6 +49,16 @@ const OrderPage: React.FC = () => {
   // Get the token from local storage instead of Redux
   const token = useSelector((state:RootState)=>state.auth.token)
   // const token = localStorage.getItem('token')
+    // const clearcart = async () => {
+    //   try {
+    //     await apiClient.delete("/api/cart/", {
+    //       headers: { Authorization: `Bearer ${token}` },
+    //     });
+    //   } catch (err) {
+    //     console.error("Failed to clear cart:", err);
+    //   }
+    // };
+  // const dispatch = useDispatch();
   useEffect(() => {
     const fetchOrders = async () => {
       if (!token) {
@@ -59,6 +71,9 @@ const OrderPage: React.FC = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(response.data);
+        //  dispatch(clearCart());
+        //  clearcart();
+
       } catch (err: any) {
         if (err.response && err.response.status === 404) {
           setError("You have not placed any orders yet.");

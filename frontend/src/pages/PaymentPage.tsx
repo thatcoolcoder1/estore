@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import apiClient from "../api/axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
-import { clearCart } from "../features/CartSlice";
+// import { clearCart } from "../features/CartSlice";
 
 declare global {
   interface Window {
@@ -38,18 +38,10 @@ const PaymentPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { token, user } = useSelector((state: RootState) => state.auth);
   const cartState = useSelector((state: RootState) => state.cart); // cart from redux
-  const clearcart = async () => {
-    try {
-      await apiClient.delete("/api/cart/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    } catch (err) {
-      console.error("Failed to clear cart:", err);
-    }
-  };
+
 
   useEffect(() => {
     if (!token || !cartState) {
@@ -77,6 +69,7 @@ const PaymentPage: React.FC = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log(data)
 
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
       const options = {
@@ -89,9 +82,9 @@ const PaymentPage: React.FC = () => {
         handler: () => {
           // Frontend does not verify, just notify user
           alert("Payment successful! Redirecting...");
-          clearcart()
+          // clearcart()
 
-          dispatch(clearCart());
+         
           // dispatch(clearCart())
           navigate("/order");
         },
