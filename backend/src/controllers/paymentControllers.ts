@@ -31,42 +31,49 @@ export const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+
+
 export const verifyPayments = async (req: Request, res: Response) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { orderId, razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-    const body = `${razorpay_order_id}|${razorpay_payment_id}`;
-    const generated_signature = crypto
-      .createHmac("sha256", process.env.key_secret as string) // ✅ use key_secret
+    if (!orderId || !razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return res.status(400).json({ status: "failure", message: "Missing required fields" });
+    }
+
+    // 1️⃣ Verify Razorpay signature
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_SECRET as string)
       .update(body)
       .digest("hex");
-    console.log(generated_signature)
 
-    if (generated_signature === razorpay_signature) {
-      // find your local order by razorpay_order_id (not Mongo _id!)
-      const order = await Order.findOne({ razorpayOrderId: razorpay_order_id });
-      if (order) {
-        order.isPaid = true;
-        order.paidAt = new Date();
-        order.status = "processing";
-        await order.save();
-      }
-      console.log(order)
-      
-
-      return res.status(200).json({
-        status: "success",
-        message: "Payment verified successfully",
-      });
-    } else {
-      return res.status(400).json({
-        status: "failure",
-        message: "Invalid signature",
-      });
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ status: "failure", message: "Invalid signature" });
     }
+
+    // 2️⃣ Find the local order by its _id
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ status: "failure", message: "Order not found" });
+    }
+
+    // 3️⃣ Update order as paid
+    order.isPaid = true;
+    order.paidAt = new Date();
+    order.status = "processing";
+    // order.razorpayPaymentId = razorpay_payment_id;
+
+    await order.save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "Payment verified and order updated successfully",
+    });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "Server error" });
+    console.error("Payment verification error:", error);
+    return res.status(500).json({ status: "failure", message: "Server error" });
   }
 };
+
 
