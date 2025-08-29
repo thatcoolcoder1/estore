@@ -37,7 +37,7 @@ export const verifyPayments = async (req: Request, res: Response) => {
 
     const body = `${razorpay_order_id}|${razorpay_payment_id}`;
     const generated_signature = crypto
-      .createHmac("sha256", process.env.webhook_secret as string) // ✅ use key_secret
+      .createHmac("sha256", process.env.key_secret as string) // ✅ use key_secret
       .update(body)
       .digest("hex");
     console.log(generated_signature)
@@ -51,6 +51,8 @@ export const verifyPayments = async (req: Request, res: Response) => {
         order.status = "processing";
         await order.save();
       }
+      console.log(order)
+      
 
       return res.status(200).json({
         status: "success",
