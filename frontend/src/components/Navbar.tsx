@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
     setError(null);
     try {
       const { data } = await axios.get<Product[]>(
-        `http://localhost:3000/api/products/search?query=${encodeURIComponent(
+        `/api/products/search?query=${encodeURIComponent(
           query
         )}`
       );

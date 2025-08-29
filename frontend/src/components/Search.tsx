@@ -31,7 +31,7 @@ const Search: React.FC = () => {
 
     try {
       const { data } = await apiClient.get<Product[]>(
-        `http://localhost:3000/api/products/search?query=${encodeURIComponent(query)}`
+        `/api/products/search?query=${encodeURIComponent(query)}`
       );
 
       if (!Array.isArray(data) || data.length === 0) {
