@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import apiClient from "../api/axios";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
+import { useLocation } from "react-router-dom";
 // import { clearCart } from "../features/CartSlice";
 
 declare global {
@@ -63,7 +64,11 @@ interface RazorpayOrderResponse {
 // }
 
 const PaymentPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+
+  const location = useLocation();
+  const { id:orderId } = location.state as {
+    id:string
+  }
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -116,7 +121,7 @@ const PaymentPage: React.FC = () => {
             const res = await apiClient.post<RazorpayOrderResponse>(
               "/api/payments/verify",
               {
-                orderId : id,
+                orderId : orderId,
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
