@@ -73,12 +73,12 @@ const CheckoutPage: React.FC = () => {
     try {
       // Hit PAYMENT create-order route (not order one)
       const paymentRes = await apiClient.post<RazorpayOrderResponse>(
-        "/api/payments/create-order",
+        "/api/order/create-order",
         {
           shippingAddress,
           paymentMethod: "Razorpay",
-          items: cart.items,
-          amount: cart.totalPrice,
+          // items: cart.items,
+          // amount: cart.totalPrice,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
