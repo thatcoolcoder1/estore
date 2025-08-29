@@ -72,7 +72,7 @@ const CheckoutPage: React.FC = () => {
     try {
       // Hit PAYMENT create-order route (not order one)
       const paymentRes = await apiClient.post<RazorpayOrderResponse>(
-        "http://localhost:3000/api/payments/create-order",
+        "/api/payments/create-order",
         {
           shippingAddress,
           paymentMethod: "Razorpay",

@@ -45,7 +45,7 @@ const ProductDetailPage: React.FC = () => {
       dispatch(addItemToCart(cartItem));
 
       await apiClient.post(
-        "http://localhost:3000/api/cart/",
+        "/api/cart/",
         { productId: product._id, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -67,7 +67,7 @@ const ProductDetailPage: React.FC = () => {
       try {
         setLoading(true);
         const response = await apiClient.get<Product>(
-          `http://localhost:3000/api/products/${id}`
+          `/api/products/${id}`
         );
         setProduct(response.data);
         setActiveImage(response.data.image[0]);

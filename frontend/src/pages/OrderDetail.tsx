@@ -53,7 +53,7 @@ const OrderDetailPage: React.FC = () => {
       }
 
       try {
-        const response = await apiClient.get<Order>(`http://localhost:3000/api/order/${id}`, {
+        const response = await apiClient.get<Order>(`/api/order/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrder(response.data);

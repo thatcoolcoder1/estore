@@ -35,7 +35,7 @@ const AuthPage: React.FC = () => {
 
     try {
       const response = await apiClient.post<LoginResponse>(
-        "http://localhost:3000/auth/login",
+        "/auth/login",
         { email, password }
       );
       dispatch(

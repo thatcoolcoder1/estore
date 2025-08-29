@@ -60,7 +60,7 @@ const PaymentPage: React.FC = () => {
   try {
     // 1. Create a Razorpay order on backend
     const { data } = await apiClient.post<RazorpayOrderResponse>(
-      "http://localhost:3000/api/payments/create-order",
+      "/api/payments/create-order",
       {
         amount: cart.totalPrice,
         currency: "INR",

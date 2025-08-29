@@ -33,7 +33,7 @@ const RegisterPage: React.FC = () => {
 
     try {
       const response = await apiClient.post<RegisterResponse>(
-        "http://localhost:3000/auth/register",
+        "/auth/register",
         { name, email, password }
       );
       if(response.data.token && response.data.user){

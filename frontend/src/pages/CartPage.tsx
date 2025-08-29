@@ -46,7 +46,7 @@ const CartPage: React.FC = () => {
       }
       try {
         const response = await apiClient
-        .get<Cart>("http://localhost:3000/api/cart/", {
+        .get<Cart>("/api/cart/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         dispatch(setCart(response.data));
@@ -68,7 +68,7 @@ const CartPage: React.FC = () => {
     dispatch(updateItemQuantity({ productId, quantity: newQuantity }));
     try {
       await apiClient.put(
-        "http://localhost:3000/api/cart/",
+        "/api/cart/",
         { productId, quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -80,7 +80,7 @@ const CartPage: React.FC = () => {
   const handleRemoveItem = async (productId: string) => {
     dispatch(removeItemFromCart(productId));
     try {
-      await apiClient.delete("http://localhost:3000/api/cart/item", {
+      await apiClient.delete("/api/cart/item", {
         headers: { Authorization: `Bearer ${token}` },
         data: { productId },
       } as any);
@@ -92,7 +92,7 @@ const CartPage: React.FC = () => {
   const handleClearCart = async () => {
     dispatch(clearCart());
     try {
-      await apiClient.delete("http://localhost:3000/api/cart/", {
+      await apiClient.delete("/api/cart/", {
         headers: { Authorization: `Bearer ${token}` },
       });
     } catch (err) {

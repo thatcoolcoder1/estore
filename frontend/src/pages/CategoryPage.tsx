@@ -35,7 +35,7 @@ const CategoryPage: React.FC = () => {
       try {
         setLoading(true);
         const response = await apiClient.get<Product[]>(
-          `http://localhost:3000/api/products/category/${category}`
+          `/api/products/category/${category}`
         );
         setProducts(response.data);
       } catch (err: any) {
@@ -67,7 +67,7 @@ const CategoryPage: React.FC = () => {
       dispatch(addItemToCart(cartItem));
 
       await apiClient.post(
-        "http://localhost:3000/api/cart/",
+        "/api/cart/",
         {
           productId: product._id,
           quantity: 1,
