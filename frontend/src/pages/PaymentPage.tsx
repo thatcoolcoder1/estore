@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
 import apiClient from "../api/axios";
 import { useSelector } from "react-redux";
@@ -30,10 +30,40 @@ interface RazorpayOrderResponse {
   id: string;
   amount: number;
   currency: string;
-  status?:string
+  status?: string;
 }
 
+// interface OrderItem {
+//   product: string;
+//   title: string;
+//   image: string[];
+//   price: number;
+//   quantity: number;
+// }
+
+// interface Order {
+//   _id: string;
+//   user: string;
+//   items: OrderItem[];
+//   totalPrice: number;
+//   shippingAddress: {
+//     address: string;
+//     city: string;
+//     postalCode: string;
+//     country: string;
+//   };
+//   paymentMethod: string;
+//   isPaid: boolean;
+//   paidAt?: string;
+//   isDelivered: boolean;
+//   deliveredAt?: string;
+//   status: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
+
 const PaymentPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +89,7 @@ const PaymentPage: React.FC = () => {
     }
 
     try {
+      // const order = await apiClient.get("/api/order/:id");
       // 1. Create a Razorpay order on backend
       const { data } = await apiClient.post<RazorpayOrderResponse>(
         "/api/payments/create-order",
@@ -85,6 +116,7 @@ const PaymentPage: React.FC = () => {
             const res = await apiClient.post<RazorpayOrderResponse>(
               "/api/payments/verify",
               {
+                orderId : id,
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
@@ -94,6 +126,7 @@ const PaymentPage: React.FC = () => {
 
             if (res.data.status === "success") {
               alert("Payment successful! Redirecting...");
+
               // dispatch(clearCart())  // optionally clear cart
               navigate("/order");
             } else {
