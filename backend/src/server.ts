@@ -15,15 +15,30 @@ const app = express();
 // Use the port provided by the environment (for Render) or 3000 for local dev
 const port = process.env.PORT || 3000;
 
-// --- CORS Configuration ---
+
 const allowedOrigins = [
-  'https://estore-rho.vercel.app', // Your deployed Vercel URL
-  'http://localhost:5173'        // Your local development URL
+  'https://estore-rho.vercel.app',                              // Your main production URL
+  /^https:\/\/estore-.*-thatcoolcoder1s-projects\.vercel\.app$/, // RegExp for all Vercel previews
+  'http://localhost:5173'                                     // Your local development URL
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // Check if the origin matches any of the allowed origins (string or RegExp)
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return allowedOrigin === origin;
+      }
+      if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return false;
+    });
+
+    if (isAllowed) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -31,8 +46,9 @@ const corsOptions = {
   }
 };
 
-// --- Apply Middleware ---
-app.use(cors(corsOptions)); // This was the missing line
+app.use(cors(corsOptions));
+
+// --- END CORS CONFIGURATION ---
 app.use(express.json());   // This should come after CORS
 
 // Mount routes
