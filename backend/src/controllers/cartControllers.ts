@@ -165,7 +165,7 @@ export const clearCart = async (req:Request, res: Response) => {
         return res.status(401).json({ message: "User not authenticated" });
     }
     const userId = req.user._id
-    let {productId,quantity} = req.body;
+    // let {productId,quantity} = req.body;
     try {
         const cart= await Cart.findOne({user:userId})
 
