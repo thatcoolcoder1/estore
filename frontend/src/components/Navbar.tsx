@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
-              src="public\assets\es.png"
+              src="/assets/es.png"
               alt="eStore Logo"
               className="w-50 h-50 object-contain "
             />

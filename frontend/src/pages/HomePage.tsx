@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
         {/* Banner */}
         <div className="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden mb-12 shadow-2xl">
           <img
-            src="public\assets\banner.png"
+            src="/assets/banner.png"
             alt="Hero Banner"
             className="w-full h-[70vh] object-cover"
           />
