@@ -35,7 +35,7 @@ import apiClient from "../api/axios";
 //   updatedAt: string;
 // }
 interface RazorpayOrderResponse {
-  id: string;
+  _id: string;
   amount: number;
   currency: string;
 }
@@ -83,7 +83,7 @@ const CheckoutPage: React.FC = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      const { id, amount, currency } = paymentRes.data;
+      const { _id:orderId, amount, currency } = paymentRes.data;
       // try {
       //   await apiClient.delete("/api/cart/", {
       //     headers: { Authorization: `Bearer ${token}` },
@@ -95,7 +95,7 @@ const CheckoutPage: React.FC = () => {
 
       // Navigate to dedicated /pay page with order details
       navigate("/pay", {
-        state: { id, amount, currency, shippingAddress },
+        state: {   orderId, amount, currency, shippingAddress },
       });
     } catch (checkoutError: any) {
       console.error("Error during checkout:", checkoutError);
