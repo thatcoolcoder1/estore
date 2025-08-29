@@ -1,5 +1,5 @@
 // src/features/CartSlice.ts
-import { createSlice  } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 interface CartItem {
   product: string;
@@ -71,7 +71,11 @@ const cartSlice = createSlice({
       );
     },
 
-    clearCart: () => initialState,
+    // Assuming your state looks like { items: [], totalPrice: 0 }
+    clearCart: (state) => {
+      state.items = [];
+      state.totalPrice = 0;
+    },
   },
 });
 
