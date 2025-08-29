@@ -30,6 +30,7 @@ interface RazorpayOrderResponse {
   id: string;
   amount: number;
   currency: string;
+  status?:string
 }
 
 const PaymentPage: React.FC = () => {
@@ -41,7 +42,6 @@ const PaymentPage: React.FC = () => {
   // const dispatch = useDispatch();
   const { token, user } = useSelector((state: RootState) => state.auth);
   const cartState = useSelector((state: RootState) => state.cart); // cart from redux
-
 
   useEffect(() => {
     if (!token || !cartState) {
@@ -69,7 +69,7 @@ const PaymentPage: React.FC = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(data)
+      console.log(data);
 
       const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
       const options = {
@@ -79,14 +79,30 @@ const PaymentPage: React.FC = () => {
         name: user.name,
         description: "Payment for your Cart",
         order_id: data.id,
-        handler: () => {
-          // Frontend does not verify, just notify user
-          alert("Payment successful! Redirecting...");
-          // clearcart()
+        handler: async function (response: any) {
+          try {
+            // Send payment details to backend for verification
+            const res = await apiClient.post<RazorpayOrderResponse>(
+              "/api/payments/verify",
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-         
-          // dispatch(clearCart())
-          navigate("/order");
+            if (res.data.status === "success") {
+              alert("Payment successful! Redirecting...");
+              // dispatch(clearCart())  // optionally clear cart
+              navigate("/order");
+            } else {
+              alert("Payment verification failed on server.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Error verifying payment.");
+          }
         },
         prefill: {
           name: user.name,
