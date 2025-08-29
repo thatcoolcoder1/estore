@@ -84,14 +84,14 @@ const CheckoutPage: React.FC = () => {
       );
 
       const { id, amount, currency } = paymentRes.data;
-      try {
-        await apiClient.delete("/api/cart/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } catch (err) {
-        console.error("Failed to clear cart:", err);
-      }
-      dispatch(clearCart());
+      // try {
+      //   await apiClient.delete("/api/cart/", {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   });
+      // } catch (err) {
+      //   console.error("Failed to clear cart:", err);
+      // }
+      // dispatch(clearCart());
 
       // Navigate to dedicated /pay page with order details
       navigate("/pay", {
