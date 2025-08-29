@@ -45,7 +45,7 @@ const AuthPage: React.FC = () => {
         })
       );
 
-      console.log("Login successful:", response.data);
+      // console.log("Login successful:", response.data);
 
       // Redirect to home/dashboard
       navigate("/");
