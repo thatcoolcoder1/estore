@@ -5,9 +5,9 @@ import { getAdminOrders, updateOrderToDelivered, updateOrderToPaid, getOrderById
 const router = Router();
 
 router.get("/", protect, getOrders)
-router.get("/:id", protect, getOrderById)
 router.post("/create-order", protect, createOrder)
-router.get("/admin", protect, admin, getAdminOrders)
+router.get("/", protect, admin, getAdminOrders)
+router.get("/:id", protect, getOrderById)
 router.post("/:id/delivered", protect, admin, updateOrderToDelivered)
 router.post("/:id/pay", protect, admin, updateOrderToPaid)
 
