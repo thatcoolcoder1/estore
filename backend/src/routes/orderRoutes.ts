@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", protect, getOrders)
 router.post("/create-order", protect, createOrder)
-router.get("/", protect, admin, getAdminOrders)
+router.get("/allOrders", protect, admin, getAdminOrders)
 router.get("/:id", protect, getOrderById)
 router.post("/:id/delivered", protect, admin, updateOrderToDelivered)
 router.post("/:id/pay", protect, admin, updateOrderToPaid)
