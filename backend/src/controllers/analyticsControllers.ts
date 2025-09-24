@@ -45,7 +45,7 @@ export const getOrdersByDate = async(req:Request, res:Response) => {
       },
       {$sort:{_id:1}}, //ascending ordersByDate
     ]);
-    res.status(200).json(getOrdersByDate)
+    res.status(200).json(ordersByDate)
     
     
   } catch (error) {
