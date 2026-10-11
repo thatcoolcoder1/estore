@@ -4,7 +4,8 @@
     "target": "ES2022",
     "outDir": "./dist",
     "rootDir": "./src",
-    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
     "strict": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
